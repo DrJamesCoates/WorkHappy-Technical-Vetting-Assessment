@@ -13,7 +13,9 @@ services:
     build: .
     command: bin/rails server -b 0.0.0.0
     environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/assessments_development
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
     ports:
       - "3000:3000"
     depends_on:
