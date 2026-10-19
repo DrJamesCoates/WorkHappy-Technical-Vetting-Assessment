@@ -2,6 +2,7 @@ require "csv"
 
 class AssessmentsController < ApplicationController
   before_action :require_admin
+  before_action :validate_export_filters, only: :export
 
   def index
     logger.info "Dashboard params: #{params.inspect}"
@@ -64,11 +65,33 @@ class AssessmentsController < ApplicationController
   end
 
   def from_date_filter
-    Date.parse(filter_params[:from]) rescue nil
+    parse_date(filter_params[:from])
   end
 
   def to_date_filter
-    Date.parse(filter_params[:to]).end_of_day rescue nil
+    parse_date(filter_params[:to])&.end_of_day
+  end
+
+  def parse_date(value)
+    Date.parse(value) rescue nil
+  end
+
+  def validate_export_filters
+    status, from, to = filter_params.values_at(:status, :from, :to)
+    errors = []
+
+    if status.present? && !Assessment::VALID_STATUSES.map(&:to_s).include?(status)
+      errors << "Status must be one of: #{Assessment::VALID_STATUSES.join(', ')}"
+    end
+
+    errors << "From date is not a valid date" if from.present? && parse_date(from).nil?
+    errors << "To date is not a valid date" if to.present? && parse_date(to).nil?
+
+    if from.present? && to.present? && parse_date(from) && parse_date(to) && parse_date(from) > parse_date(to)
+      errors << "From date must be on or before To date"
+    end
+
+    render json: { errors: errors }, status: :unprocessable_entity if errors.any?
   end
 
   def filter_params
