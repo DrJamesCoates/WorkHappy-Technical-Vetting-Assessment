@@ -7,7 +7,7 @@
   <%= f.submit "Filter" %>
 <% end %>
 
-<p><%= link_to "Export CSV", export_assessments_path(company_id: current_admin.company_id, format: :csv) %></p>
+<p><%= link_to "Export CSV", export_assessments_path(from: params[:from], to: params[:to], status: params[:status], format: :csv) %></p>
 
 <table>
   <tr><th>Date</th><th>Employee</th><th>Email</th><th>Status</th><th>Score</th></tr>
