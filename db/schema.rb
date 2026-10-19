@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2015_01_01_000003) do
+ActiveRecord::Schema[7.2].define(version: 2026_10_19_165316) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,6 +30,8 @@ ActiveRecord::Schema[7.2].define(version: 2015_01_01_000003) do
     t.string "status"
     t.jsonb "responses_json"
     t.datetime "created_at"
+    t.string "legacy_status"
+    t.datetime "status_backfilled_at"
     t.index ["company_id"], name: "index_assessments_on_company_id"
   end
 
