@@ -1,0 +1,12 @@
+{
+  "name": "assessments",
+  "private": true,
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.0"
+  }
+}

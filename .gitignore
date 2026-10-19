@@ -1,0 +1,9 @@
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+/node_modules
+/app/assets/builds/*
+!/app/assets/builds/.keep
+/config/master.key
+.DS_Store

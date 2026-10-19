@@ -1,0 +1,7 @@
+<h1>Admin login</h1>
+<% if flash.now[:alert] %><p class="flash"><%= flash.now[:alert] %></p><% end %>
+<%= form_with url: login_path do |f| %>
+  <p><%= f.email_field :email, placeholder: "Email" %></p>
+  <p><%= f.password_field :password, placeholder: "Password" %></p>
+  <%= f.submit "Log in" %>
+<% end %>
