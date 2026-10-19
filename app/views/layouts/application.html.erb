@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Assessments</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application", defer: true %>
+  </head>
+  <body>
+    <% if current_admin %>
+      <p><%= current_admin.company.name %> &middot; <%= current_admin.email %> &middot; <%= link_to "Log out", logout_path, data: { turbo_method: :delete } %></p>
+    <% end %>
+    <% flash.each do |k, msg| %><p class="flash"><%= msg %></p><% end %>
+    <%= yield %>
+  </body>
+</html>

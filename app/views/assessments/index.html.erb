@@ -1,0 +1,23 @@
+<h1>Assessments</h1>
+
+<%= form_with url: assessments_path, method: :get do |f| %>
+  From <%= f.date_field :from, value: params[:from] %>
+  To <%= f.date_field :to, value: params[:to] %>
+  Status <%= f.text_field :status, value: params[:status] %>
+  <%= f.submit "Filter" %>
+<% end %>
+
+<p><%= link_to "Export CSV", export_assessments_path(company_id: current_admin.company_id, format: :csv) %></p>
+
+<table>
+  <tr><th>Date</th><th>Employee</th><th>Email</th><th>Status</th><th>Score</th></tr>
+  <% @assessments.each do |a| %>
+    <tr>
+      <td><%= a.created_at.to_date %></td>
+      <td><%= a.employee.name %></td>
+      <td><%= a.employee_email %></td>
+      <td style="color: <%= status_badge(a.status) %>"><%= a.status %></td>
+      <td><%= assessment_score(a) %></td>
+    </tr>
+  <% end %>
+</table>
